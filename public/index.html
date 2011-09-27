@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Play Lottery</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<body>
+        <div id="cash"></div>
+        <div id="loto"></div>
+        <div id="mega"></div>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	       $.ajax({
+                 url: "/c5",
+                 datatype: 'script',
+                 success: function(resp) {
+                   google.load('visualization','1', { packages: ['corechart'], callback: function() {
+                     eval(resp);
+                     var chart = new google.visualization.ColumnChart(document.getElementById('cash'));
+                     chart.draw(data_table, { width : 800, height : 400, title : 'Cash Five', 
+                                              isStacked : true, hAxis : { title : 'No.', titleTextStyle : {color : 'red'}}
+                                            }); 
+                   } });
+                 }
+               });
+	       $.ajax({
+                 url: "/lt",
+                 datatype: 'script',
+                 success: function(resp) {
+                   google.load('visualization','1', { packages: ['corechart'], callback: function() {
+                     eval(resp);
+                     var chart = new google.visualization.ColumnChart(document.getElementById('loto'));
+                     chart.draw(data_table, { width : 800, height : 400, title : 'Lotto Texas', 
+                                              isStacked : true, hAxis : { title : 'No.', titleTextStyle : {color : 'red'}}
+                                            }); 
+                   } });
+                 }
+               });
+	       $.ajax({
+                 url: "/mm",
+                 datatype: 'script',
+                 success: function(resp) {
+                   google.load('visualization','1', { packages: ['corechart'], callback: function() {
+                     eval(resp);
+                     var chart = new google.visualization.ComboChart(document.getElementById('mega'));
+                     chart.draw(data_table, { width : 800, height : 400, title : 'MegaMillions', 
+                                              hAxis : { title : 'No.', titleTextStyle : {color : 'red'}},
+                                              seriesType: "bars", series: {1: {type: "line"}}
+                                            });
+                   } });
+                 }
+               });
+	       return false;
+	     });
+        </script> 
+</body>
+</html>
